@@ -11,7 +11,7 @@
   DNS Type     : Configured via var.dns_type
   TTL          : Configured via var.ttl
 */
-
+#Attach existing IAM Role to EC2 instance
 
 resource "aws_instance" "instances" {
   for_each = var.components
@@ -19,6 +19,7 @@ resource "aws_instance" "instances" {
   ami                    = var.ami
   instance_type          = var.instance_type
   vpc_security_group_ids = var.vpc_sg_id
+  iam_instance_profile = var.iam_role
 
   tags = {
     Name = each.key
