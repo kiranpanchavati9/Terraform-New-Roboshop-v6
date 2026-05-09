@@ -38,6 +38,7 @@ resource "aws_instance" "instances" {
     inline = [
       "sudo yum update -y",
       "sudo yum install -y nginx",
+      "sudo systemctl start nginx",
     ]
   }
 }
