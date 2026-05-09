@@ -13,6 +13,11 @@
 */
 #Attach existing IAM Role to EC2 instance
 
+resource "aws_key_pair" "aws-dev-key" {
+  key_name   = "aws-dev"
+  public_key = file("~/.ssh/aws-dev.pub")
+}
+
 resource "aws_instance" "instances" {
   for_each = var.components
 
@@ -25,6 +30,12 @@ resource "aws_instance" "instances" {
     Name = each.key
   }
 
+  connection {
+    type        = "ssh"
+    user        = "ec2-user"
+    private_key = file("~/.ssh/aws-dev")   # ← private key on workstation
+    host        = self.public_ip
+  }
 
   provisioner "remote-exec" {
     inline = [
