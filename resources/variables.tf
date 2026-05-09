@@ -37,10 +37,6 @@ variable "components" {
   }
 }
 
-variable "private_key_path" {
-  default = "~/.ssh/SSH_Keys_AWS/aws-dev.pem"
-}
-
 variable "iam_role" {
   default = "workstation-role"
 }
