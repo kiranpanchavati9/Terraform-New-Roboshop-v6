@@ -42,6 +42,6 @@ variable "iam_role" {
 }
 
 variable "key_name" {
-  default = "aws-dev"
+  default = "roboshop-dev"
 }
 
