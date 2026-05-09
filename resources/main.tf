@@ -27,14 +27,14 @@ resource "aws_instance" "instances" {
     Name = each.key
   }
 
-  connection {
-    type        = "ssh"
-    user        = "ec2-user"
-    private_key = file("~/.ssh/${var.key_name}")  # ← update path
-    host        = self.public_ip
-  }
-
   provisioner "remote-exec" {
+    connection {
+      type = "ssh"
+      user = "ec2-user"
+      private_key = file(pathexpand("~/.ssh/${var.key_name}"))
+      host        = self.public_ip
+
+    }
     inline = [
       "sudo yum update -y",
       "sudo yum install -y nginx",
