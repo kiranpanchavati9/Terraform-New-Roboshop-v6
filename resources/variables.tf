@@ -41,4 +41,7 @@ variable "iam_role" {
   default = "workstation-role"
 }
 
+variable "key_name" {
+  default = "aws-dev"
+}
 

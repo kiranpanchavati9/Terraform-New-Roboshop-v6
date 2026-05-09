@@ -13,10 +13,6 @@
 */
 #Attach existing IAM Role to EC2 instance
 
-resource "aws_key_pair" "aws-dev-key" {
-  key_name   = "aws-dev"
-  public_key = file("~/.ssh/aws-dev.pub")
-}
 
 resource "aws_instance" "instances" {
   for_each = var.components
@@ -25,6 +21,7 @@ resource "aws_instance" "instances" {
   instance_type          = var.instance_type
   vpc_security_group_ids = var.vpc_sg_id
   iam_instance_profile = var.iam_role
+  key_name               = var.key_name
 
   tags = {
     Name = each.key
@@ -33,7 +30,7 @@ resource "aws_instance" "instances" {
   connection {
     type        = "ssh"
     user        = "ec2-user"
-    private_key = file("~/.ssh/aws-dev")   # ← private key on workstation
+    private_key = file("~/.ssh/${var.key_name}")  # ← update path
     host        = self.public_ip
   }
 
